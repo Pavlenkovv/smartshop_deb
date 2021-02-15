@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+/venv/
+/.idea/
+__pycache__/
+mainapp/__pycache__/forms.cpython-39.pyc
+mainapp/__pycache__/mixins.cpython-39.pyc
+mainapp/__pycache__/urls.cpython-39.pyc
+mainapp/__pycache__/views.cpython-39.pyc
