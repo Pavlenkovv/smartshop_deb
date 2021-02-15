@@ -43,7 +43,7 @@ PRODUCT_SPEC = {
         'Фронтальна камера (МП)': 'frontal_cam_mp',
     }
 }
-#не працює належним чином
+
 
 def get_product_spec(product, model_name):
     table_content = ''
@@ -57,5 +57,5 @@ def product_spec(product):
     model_name = product.__class__._meta.model_name
     if isinstance(product, Smartphone):
         if not product.sd:
-            PRODUCT_SPEC['smartphone'].pop("Максимальний об'єм карти пам'яті")
+            PRODUCT_SPEC['smartphone'].pop("Максимальний об'єм карти пам'яті", None)
     return mark_safe(TABLE_HEAD + get_product_spec(product, model_name) + TABLE_TAIL)
