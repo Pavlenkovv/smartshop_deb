@@ -159,7 +159,7 @@ class Customer(models.Model):
     orders = models.ManyToManyField('Order', verbose_name='Замовлення покупця', related_name='related_customer')
 
     def __str__(self):
-        return f'Покупець: {self.user.first_name} {self.user.last_name}'
+        return f'Покупець: {self.user}'
 
 
 class Order(models.Model):
