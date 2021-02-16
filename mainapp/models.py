@@ -173,7 +173,7 @@ class Order(models.Model):
     BUYING_TYPE_DELIVERY = 'delivery'
 
     STATUS_CHOICES = (
-        (STATUS_NEW, 'Нове замщвлення'),
+        (STATUS_NEW, 'Нове замовлення'),
         (STATUS_IN_PROGRESS, 'Замовлення в обробці'),
         (STATUS_READY, 'Замовлення готове'),
         (STATUS_COMPLETED, 'Замовлення виконане')
