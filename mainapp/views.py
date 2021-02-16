@@ -17,10 +17,12 @@ class BaseView(CartMixin, View):
         products = LatestProducts.objects.get_products_for_main_page(
             "notebook", "smartphone", with_respect_to='smartphone'
         )
+        title = 'My Shop'
         context = {
             'categories': categories,
             'products': products,
-            'cart': self.cart
+            'cart': self.cart,
+            'title': title
         }
         return render(request, 'base.html', context)
 
