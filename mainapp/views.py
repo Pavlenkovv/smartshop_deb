@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView, View
 
 from .mixins import CategoryDetailMixin, CartMixin
-from .models import Notebook, Smartphone, Category, LatestProducts, CartProduct, Customer
+from .models import Notebook, Smartphone, Category, LatestProducts, CartProduct, Customer, Cart
 from .forms import OrderForm
 from .utils import recalc_cart
 
@@ -134,7 +134,7 @@ class MakeOrderView(CartMixin, View):
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         form = OrderForm(request.POST or None)
-        customer = Customer.objects.get(user=request.user)
+        customer = Customer.objects.get(user=request.user) if request.user.is_authenticated else None
         if form.is_valid():
             new_order = form.save(commit=False)
             new_order.customer = customer
@@ -150,7 +150,8 @@ class MakeOrderView(CartMixin, View):
             new_order.cart = self.cart
             self.cart.save()
             new_order.save()
-            customer.orders.add(new_order)
+            if customer is not None:
+                customer.orders.add(new_order)
             messages.add_message(request, messages.INFO, 'Дякуємо за замовлення! Менеджер Вам зателефонує')
             return HttpResponseRedirect('/')
         return HttpResponseRedirect('/checkout/')

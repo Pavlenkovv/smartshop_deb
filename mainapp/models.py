@@ -124,7 +124,7 @@ class Smartphone(Product):
 
 
 class CartProduct(models.Model):
-    user = models.ForeignKey('Customer', verbose_name='Покупець', on_delete=models.CASCADE)
+    user = models.ForeignKey('Customer', null=True, blank=True, verbose_name='Покупець', on_delete=models.CASCADE)
     cart = models.ForeignKey('Cart', verbose_name='Кошик', on_delete=models.CASCADE, related_name='related_products')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -153,7 +153,7 @@ class Cart(models.Model):
 
 
 class Customer(models.Model):
-    user = models.ForeignKey(User, verbose_name='Покупець', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, verbose_name='Покупець', on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, verbose_name='Номер телефону', null=True, blank=True)
     address = models.CharField(max_length=255, verbose_name='Адреса', null=True, blank=True)
     orders = models.ManyToManyField('Order', verbose_name='Замовлення покупця', related_name='related_customer')
@@ -184,7 +184,10 @@ class Order(models.Model):
         (BUYING_TYPE_DELIVERY, 'Доставка')
     )
 
-    customer = models.ForeignKey(Customer, verbose_name='Покупець', related_name='related_orders', on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        Customer, null=True, blank=True, verbose_name='Покупець',
+        related_name='related_orders', on_delete=models.CASCADE
+    )
     first_name = models.CharField(max_length=255, verbose_name="Ім'я")
     last_name = models.CharField(max_length=255, verbose_name="Прізвище")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
