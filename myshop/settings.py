@@ -23,8 +23,10 @@ SECRET_KEY = '034&ch(pg0)uz70^5(r1snzf^6)m8eq%-lyhli4@ony*!e1ueg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['193.26.134.217', 'smartshop.pp.ua']
-
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ['193.26.134.217', 'smartshop.pp.ua', 'localhost']
 
 # Application definition
 
@@ -119,12 +121,31 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#
+# STATICFILES_DIRS = [(os.path.join(BASE_DIR, 'static_dev'))]
+#
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+
+
+if DEBUG:
+    STATIC_DIR = os.path.join(BASE_DIR, 'static')
+    STATICFILES_DIRS = [
+        STATIC_DIR,
+        '/home/pavlenko/smartshop/smartshop_deb/static/',
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    )
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-STATICFILES_DIRS = [(os.path.join(BASE_DIR, 'static_dev'))]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
